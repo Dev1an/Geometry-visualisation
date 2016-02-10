@@ -23,16 +23,23 @@ Template.body.onRendered(function() {
 
 			boxPath.attr('d', line(boxGeometry.coordinates))
 
-			var distinctObjects = svgContainer.selectAll('g').data(box.objects)
-			distinctObjects.enter().append('g')
+			const geometryDefinitions = svgContainer.select('defs').selectAll('path').data(box.objects)
+			geometryDefinitions.enter().append('path')
+			geometryDefinitions.attr('d', object => line(object.geometry.coordinates))
+			geometryDefinitions.attr('id', object => 'object' + object.geometryId)
+			geometryDefinitions.classed('object', true)
 
-			var objectPaths = distinctObjects.selectAll('path').data(function(data) {
+			const objectGroups = svgContainer.selectAll('g').data(box.objects)
+			objectGroups.enter().append('g')
+
+			const objectPaths = objectGroups.selectAll('use').data(function(data) {
 				const geometry = data.geometry
-				return data.instances.map(translation => geometry.coordinates.map(coordinates => coordinates.map((value, index) => value+translation[index])))
+				return data.instances.map(translation => {return {geometryId: data.geometryId, translation}})
 			})
 
-			objectPaths.enter().append('path').classed('object', true)
-			objectPaths.attr('d', instance => line(instance))
+			objectPaths.enter().append('use')
+			objectPaths.attr('xlink:href', object => '#object' + object.geometryId)
+			objectPaths.attr('transform', object => `translate(${object.translation[0]}, ${object.translation[1]})`)
 		}
 	})
 })
