@@ -22,31 +22,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="meteor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/meteor.js">
+      <file leaf-file-name="Collections.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Collections.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.111111">
-              <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+            <state vertical-scroll-proportion="-8.888889">
+              <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="meteor.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/meteor.html">
+      <file leaf-file-name="d3Visualisation.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/d3Visualisation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.125">
-              <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="meteor.less" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/meteor.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2888889">
-              <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.73170733">
+              <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="37" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -67,8 +57,10 @@
       <list>
         <option value="$PROJECT_DIR$/meteor.css" />
         <option value="$PROJECT_DIR$/meteor.html" />
-        <option value="$PROJECT_DIR$/meteor.js" />
         <option value="$PROJECT_DIR$/meteor.less" />
+        <option value="$PROJECT_DIR$/meteor.js" />
+        <option value="$PROJECT_DIR$/Collections.js" />
+        <option value="$PROJECT_DIR$/client/d3Visualisation.js" />
       </list>
     </option>
   </component>
@@ -85,7 +77,7 @@
     <option name="x" value="5" />
     <option name="y" value="23" />
     <option name="width" value="930" />
-    <option name="height" value="819" />
+    <option name="height" value="817" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -128,6 +120,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="meteor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meteor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -579,15 +585,15 @@
       <created>1455021455940</created>
       <option name="number" value="Default" />
       <updated>1455021455940</updated>
-      <workItem from="1455021457188" duration="13142000" />
+      <workItem from="1455021457188" duration="14884000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13142000" />
+    <option name="totallyTimeSpent" value="14884000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="5" y="23" width="930" height="819" extended-state="0" />
+    <frame x="5" y="23" width="930" height="817" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -630,18 +636,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/meteor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.111111">
-          <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/meteor.less">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2888889">
           <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Collections.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.888889">
+          <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/d3Visualisation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73170733">
+          <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="37" selection-end-column="2" />
           <folding />
         </state>
       </provider>
