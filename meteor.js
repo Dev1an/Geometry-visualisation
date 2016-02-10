@@ -1,15 +1,15 @@
-Boxes = new Mongo.Collection('packages', {
-	transform(package) {
-		Object.defineProperty(package, 'geometry', {
-			get() { return Geometries.findOne(package.geometryId) }
+Boxes = new Mongo.Collection('boxes', {
+	transform(box) {
+		Object.defineProperty(box, 'geometry', {
+			get() { return Geometries.findOne(box.geometryId) }
 		})
 
-		for (let object of package.objects) {
+		for (let object of box.objects) {
 			Object.defineProperty(object, 'geometry', {
 				get() { return Geometries.findOne(object.geometryId) }
 			})
 		}
-		return package
+		return box
 	}
 })
 Geometries = new Mongo.Collection('geometries')
@@ -20,24 +20,22 @@ if (Meteor.isClient) {
 
 	Template.body.onRendered(function() {
 		svgContainer = d3.select('svg')
-		const packagePath = svgContainer.append('path').attr('class', 'package')
+		const boxPath = svgContainer.append('path').attr('class', 'box')
 
 		Tracker.autorun(function() {
 			console.log('redrawing box')
 			const box = Boxes.findOne()
 
 			if (box && box.geometry) {
-				packagePath.attr('d', line(box.geometry.coordinates))
+				boxPath.attr('d', line(box.geometry.coordinates))
 
 				var distinctObjects = svgContainer.selectAll('g').data(box.objects)
-
 				distinctObjects.enter().append('g')
 
-				var objectPaths = distinctObjects
-					.selectAll('path').data(function(data) {
-						const geometry = data.geometry
-						return data.instances.map(translation => geometry.coordinates.map(coordinates => coordinates.map((value, index) => value+translation[index])))
-					})
+				var objectPaths = distinctObjects.selectAll('path').data(function(data) {
+					const geometry = data.geometry
+					return data.instances.map(translation => geometry.coordinates.map(coordinates => coordinates.map((value, index) => value+translation[index])))
+				})
 
 				objectPaths.enter().append('path').classed('object', true)
 				objectPaths.attr('d', instance => line(instance))
@@ -47,25 +45,25 @@ if (Meteor.isClient) {
 
 	Template.body.helpers({
 		left() {
-			const package = Boxes.findOne()
-			if (package && package.geometry) {
-				const coordinates = package.geometry.coordinates
+			const box = Boxes.findOne()
+			if (box && box.geometry) {
+				const coordinates = box.geometry.coordinates
 				return Math.min(...coordinates.map(coordinates => coordinates[0]))
 			}
 		},
 
 		top() {
-			const package = Boxes.findOne()
-			if (package && package.geometry) {
-				const coordinates = package.geometry.coordinates
+			const box = Boxes.findOne()
+			if (box && box.geometry) {
+				const coordinates = box.geometry.coordinates
 				return Math.min(...coordinates.map(coordinates => coordinates[1]))
 			}
 		},
 
 		width() {
-			const package = Boxes.findOne()
-			if (package && package.geometry) {
-				const xCoordinates = package.geometry.coordinates.map(coordinates => coordinates[0])
+			const box = Boxes.findOne()
+			if (box && box.geometry) {
+				const xCoordinates = box.geometry.coordinates.map(coordinates => coordinates[0])
 				const min = Math.min(...xCoordinates)
 				const max = Math.max(...xCoordinates)
 				return max - min
@@ -73,9 +71,9 @@ if (Meteor.isClient) {
 		},
 
 		height() {
-			const package = Boxes.findOne()
-			if (package && package.geometry) {
-				const xCoordinates = package.geometry.coordinates.map(coordinates => coordinates[1])
+			const box = Boxes.findOne()
+			if (box && box.geometry) {
+				const xCoordinates = box.geometry.coordinates.map(coordinates => coordinates[1])
 				const min = Math.min(...xCoordinates)
 				const max = Math.max(...xCoordinates)
 				return max - min
