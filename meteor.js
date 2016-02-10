@@ -27,7 +27,19 @@ if (Meteor.isClient) {
 			const box = Boxes.findOne()
 
 			if (box && box.geometry) {
-				boxPath.attr('d', line(box.geometry.coordinates))
+				const boxGeometry = box.geometry
+
+				const boxXCoordinates = boxGeometry.coordinates.map(coordinates => coordinates[0])
+				const boxYCoordinates = boxGeometry.coordinates.map(coordinates => coordinates[1])
+
+				const boxLeft   = Math.min(...boxXCoordinates)
+				const boxTop    = Math.min(...boxYCoordinates)
+				const boxRight  = Math.max(...boxXCoordinates)
+				const boxBottom = Math.max(...boxYCoordinates)
+
+				svgContainer.attr('viewBox', `${boxLeft} ${boxTop} ${Math.abs(boxRight-boxLeft)} ${Math.abs(boxBottom-boxTop)}`)
+
+				boxPath.attr('d', line(boxGeometry.coordinates))
 
 				var distinctObjects = svgContainer.selectAll('g').data(box.objects)
 				distinctObjects.enter().append('g')
@@ -41,43 +53,5 @@ if (Meteor.isClient) {
 				objectPaths.attr('d', instance => line(instance))
 			}
 		})
-	})
-
-	Template.body.helpers({
-		left() {
-			const box = Boxes.findOne()
-			if (box && box.geometry) {
-				const coordinates = box.geometry.coordinates
-				return Math.min(...coordinates.map(coordinates => coordinates[0]))
-			}
-		},
-
-		top() {
-			const box = Boxes.findOne()
-			if (box && box.geometry) {
-				const coordinates = box.geometry.coordinates
-				return Math.min(...coordinates.map(coordinates => coordinates[1]))
-			}
-		},
-
-		width() {
-			const box = Boxes.findOne()
-			if (box && box.geometry) {
-				const xCoordinates = box.geometry.coordinates.map(coordinates => coordinates[0])
-				const min = Math.min(...xCoordinates)
-				const max = Math.max(...xCoordinates)
-				return max - min
-			}
-		},
-
-		height() {
-			const box = Boxes.findOne()
-			if (box && box.geometry) {
-				const xCoordinates = box.geometry.coordinates.map(coordinates => coordinates[1])
-				const min = Math.min(...xCoordinates)
-				const max = Math.max(...xCoordinates)
-				return max - min
-			}
-		}
 	})
 }
