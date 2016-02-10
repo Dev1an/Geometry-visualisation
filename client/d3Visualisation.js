@@ -12,15 +12,7 @@ Template.body.onRendered(function() {
 		if (box && box.geometry) {
 			const boxGeometry = box.geometry
 
-			const boxXCoordinates = boxGeometry.coordinates.map(coordinates => coordinates[0])
-			const boxYCoordinates = boxGeometry.coordinates.map(coordinates => coordinates[1])
-
-			const boxLeft   = Math.min(...boxXCoordinates)
-			const boxTop    = Math.min(...boxYCoordinates)
-			const boxRight  = Math.max(...boxXCoordinates)
-			const boxBottom = Math.max(...boxYCoordinates)
-
-			svgContainer.attr('viewBox', `${boxLeft} ${boxTop} ${Math.abs(boxRight-boxLeft)} ${Math.abs(boxBottom-boxTop)}`)
+			svgContainer.attr('viewBox', viewBox(boxGeometry))
 
 			boxPath.attr('d', line(boxGeometry.coordinates))
 
@@ -52,3 +44,20 @@ Template.body.onRendered(function() {
 		}
 	})
 })
+
+/**
+ * Calculates the svg viewbox for a GeoJSON polygon
+ * @param {Object} the coordinates of the polygons' points
+ * @returns String
+ */
+function viewBox(polygon) {
+	const boxXCoordinates = polygon.coordinates.map(coordinates => coordinates[0])
+	const boxYCoordinates = polygon.coordinates.map(coordinates => coordinates[1])
+
+	const boxLeft   = Math.min(...boxXCoordinates)
+	const boxTop    = Math.min(...boxYCoordinates)
+	const boxRight  = Math.max(...boxXCoordinates)
+	const boxBottom = Math.max(...boxYCoordinates)
+
+	return `${boxLeft} ${boxTop} ${Math.abs(boxRight-boxLeft)} ${Math.abs(boxBottom-boxTop)}`
+}
