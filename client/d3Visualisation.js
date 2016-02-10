@@ -1,4 +1,5 @@
 const line = d3.svg.line()
+line.interpolate('linear-closed')
 var svgContainer
 
 Template.body.onRendered(function() {
@@ -30,16 +31,24 @@ Template.body.onRendered(function() {
 			geometryDefinitions.classed('object', true)
 
 			const objectGroups = svgContainer.selectAll('g').data(box.objects)
-			objectGroups.enter().append('g')
+			objectGroups.enter().append('g').classed('objects', true)
 
-			const objectPaths = objectGroups.selectAll('use').data(function(data) {
+			const objectPaths = objectGroups.selectAll('use').data(function(data, primitiveIndex) {
 				const geometry = data.geometry
-				return data.instances.map(translation => {return {geometryId: data.geometryId, translation}})
+				return data.instances.map((object, instanceIndex) => {
+					return {geometryId: data.geometryId, translation: object.position, primitiveIndex, instanceIndex, handled: object.handled}
+				})
 			})
 
 			objectPaths.enter().append('use')
 			objectPaths.attr('xlink:href', object => '#object' + object.geometryId)
 			objectPaths.attr('transform', object => `translate(${object.translation[0]}, ${object.translation[1]})`)
+			objectPaths.classed('handled', object => object.handled)
+			objectPaths.on('click', function(object){
+				Boxes.update(box._id, {$set: {
+					[`objects.${object.primitiveIndex}.instances.${object.instanceIndex}.handled`]: !object.handled
+				}})
+			})
 		}
 	})
 })
