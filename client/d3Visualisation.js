@@ -31,13 +31,13 @@ Template.body.onRendered(function() {
 			const objectPaths = objectGroups.selectAll('use').data(function(data, primitiveIndex) {
 				const geometry = data.geometry
 				return data.instances.map((object, instanceIndex) => {
-					return {geometryId: data.geometryId, translation: object.position, primitiveIndex, instanceIndex, handled: object.handled}
+					return {geometryId: data.geometryId, translation: object.position, primitiveIndex, instanceIndex, handled: object.handled, rotation: object.rotation[2]}
 				})
 			})
 
 			objectPaths.enter().append('use')
 			objectPaths.attr('xlink:href', object => '#object' + object.geometryId)
-			objectPaths.attr('transform', object => `translate(${object.translation[0]}, ${object.translation[1]})`)
+			objectPaths.attr('transform', object => `translate(${object.translation[0]} ${object.translation[1]}) rotate(${object.rotation/Math.PI*180} 30 40)`)
 			objectPaths.classed('handled', object => object.handled)
 			objectPaths.on('click', function(object){
 				Boxes.update(box._id, {$set: {

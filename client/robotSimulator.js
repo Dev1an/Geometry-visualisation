@@ -11,8 +11,10 @@ FlowRouter.route('/robot', {
 					const hand = frame.hands[0]
 
 					if (hand) {
-						Boxes.update(box._id, {$set: {"objects.0.instances.0.position": [hand.palmPosition[0]*5, hand.palmPosition[2]*5]}})
-						//d3.select('.objects>use').attr('transform', `translate(${hand.palmPosition[0]*5}, ${hand.palmPosition[2]*5})`)
+						Boxes.update(box._id, {$set: {
+							"objects.0.instances.0.position": [hand.palmPosition[0]*5, hand.palmPosition[2]*5],
+							"objects.0.instances.0.rotation": [hand.pitch(), hand.roll(), hand.yaw()]
+						}})
 					}
 				})
 			}
