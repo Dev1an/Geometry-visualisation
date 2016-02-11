@@ -1,12 +1,19 @@
 /* CSS declarations go here */
-svg {
-  max-height: calc(~"100vh - 16px");
+.graph {
+  perspective: 200px;
+  perspective-origin: center;
 
-  path.box {
-    fill: #d8d8eb;
+  svg {
+    max-height: calc(~"100vh - 16px");
+    position: absolute;
+
+    path.box {
+      fill: #d8d8eb;
+    }
+    overflow: visible;
   }
 
-  g.objects {
+  .objects {
     use {
       fill: #855ce3;
     }
@@ -22,7 +29,7 @@ svg {
       fill: #ebd8d8;
     }
 
-    g.objects {
+    .objects {
       use {
         fill: #e35d5d;
       }
@@ -32,4 +39,5 @@ svg {
       }
     }
   }
+
 }

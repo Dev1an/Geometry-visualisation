@@ -3,9 +3,11 @@ line.interpolate('linear-closed')
 var svgContainer
 
 Template.body.onRendered(function() {
-	svgContainer = d3.select('svg')
+	const graph = d3.select('.graph')
+
+	svgContainer = graph.select('svg')
 	Tracker.autorun(function() {
-		svgContainer.classed('controlling', FlowRouter.getRouteName() == 'robot')
+		graph.classed('controlling', FlowRouter.getRouteName() == 'robot')
 	})
 	const boxPath = svgContainer.append('path').attr('class', 'box')
 
@@ -15,7 +17,8 @@ Template.body.onRendered(function() {
 		if (box && box.geometry) {
 			const boxGeometry = box.geometry
 
-			svgContainer.attr('viewBox', viewBox(boxGeometry))
+			const boxViewBox = viewBox(boxGeometry)
+			svgContainer.attr('viewBox', boxViewBox.join(' '))
 
 			boxPath.attr('d', line(boxGeometry.coordinates))
 
@@ -25,17 +28,21 @@ Template.body.onRendered(function() {
 			geometryDefinitions.attr('id', object => 'object' + object.geometryId)
 			geometryDefinitions.classed('object', true)
 
-			const objectGroups = svgContainer.selectAll('g').data(box.objects)
-			objectGroups.enter().append('g').classed('objects', true)
+			const objectGroups = graph.selectAll('section').data(box.objects)
+			objectGroups.enter().append('section').classed('objects', true)
 
-			const objectPaths = objectGroups.selectAll('use').data(function(data, primitiveIndex) {
+			const objectContainers = objectGroups.selectAll('svg').data(function(data, primitiveIndex) {
 				const geometry = data.geometry
 				return data.instances.map((object, instanceIndex) => {
-					return {geometryId: data.geometryId, translation: object.position, primitiveIndex, instanceIndex, handled: object.handled}
+					return {geometryId: data.geometryId, translation: object.position, primitiveIndex, instanceIndex, handled: object.handled, rotation: object.rotation}
 				})
 			})
 
-			objectPaths.enter().append('use')
+			objectContainers.enter().append('svg').append('use')
+			const objectPaths = objectContainers.select('use')
+			objectContainers.attr('viewBox', boxViewBox)
+			objectContainers.style('transform', object => {return rotationString(object.rotation)})
+			objectContainers.style('transform-origin', object => `${(30 + object.translation[0])/boxViewBox[2]*100}% ${(40 + object.translation[1])/boxViewBox[3]*100}%`)
 			objectPaths.attr('xlink:href', object => '#object' + object.geometryId)
 			objectPaths.attr('transform', object => `translate(${object.translation[0]}, ${object.translation[1]})`)
 			objectPaths.classed('handled', object => object.handled)
@@ -44,6 +51,8 @@ Template.body.onRendered(function() {
 					[`objects.${object.primitiveIndex}.instances.${object.instanceIndex}.handled`]: !object.handled
 				}})
 			})
+
+
 		}
 	})
 })
@@ -62,5 +71,7 @@ function viewBox(polygon) {
 	const boxRight  = Math.max(...boxXCoordinates)
 	const boxBottom = Math.max(...boxYCoordinates)
 
-	return `${boxLeft} ${boxTop} ${Math.abs(boxRight-boxLeft)} ${Math.abs(boxBottom-boxTop)}`
+	return [boxLeft, boxTop, Math.abs(boxRight-boxLeft), Math.abs(boxBottom-boxTop)]
 }
+
+function rotationString(rotation) {return `rotateZ(${rotation[2]}rad)` }
