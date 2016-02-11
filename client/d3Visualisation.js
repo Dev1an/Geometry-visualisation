@@ -4,6 +4,9 @@ var svgContainer
 
 Template.body.onRendered(function() {
 	svgContainer = d3.select('svg')
+	Tracker.autorun(function() {
+		svgContainer.classed('controlling', FlowRouter.getRouteName() == 'robot')
+	})
 	const boxPath = svgContainer.append('path').attr('class', 'box')
 
 	Tracker.autorun(function() {
