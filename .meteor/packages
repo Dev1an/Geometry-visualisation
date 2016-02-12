@@ -21,3 +21,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 d3
 less
 kadira:flow-router
+keypress:keypress

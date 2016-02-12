@@ -1,9 +1,14 @@
 /* CSS declarations go here */
 svg {
   max-height: calc(~"100vh - 16px");
+  overflow: visible;
 
   path.box {
     fill: #d8d8eb;
+  }
+
+  .arrow {
+    fill: white;
   }
 
   g.objects {
@@ -14,6 +19,10 @@ svg {
     use.handled {
       fill-opacity: 0;
       stroke: #855ce3;
+    }
+
+    use.handling {
+      fill: green !important;
     }
   }
 
