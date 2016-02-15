@@ -1,16 +1,15 @@
 Template.realTime.helpers({
 	box() {
-		return _.extend(
-			Boxes.findOne(),
-			{
-				frame(instanceIndex, objectIndex, boxId) {
-					return RealTimeObjects.findOne(
-						boxId+objectIndex.toString(16)+instanceIndex.toString(16),
-						{sort: {date: -1}}
-					)
-				}
-			}
-		)
+		return Boxes.findOne()
+	},
+	frame() {
+		return function(instanceIndex, objectIndex, boxId) {
+			console.log('retreiving frame')
+			return RealTimeObjects.findOne(
+					boxId+objectIndex.toString(16)+instanceIndex.toString(16),
+					{sort: {date: -1}}
+			)
+		}
 	}
 })
 

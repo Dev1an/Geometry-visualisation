@@ -1,16 +1,16 @@
 <template name="boxView">
-	<svg viewBox="{{viewBox geometry}}">
+	<svg viewBox="{{viewBox box.geometry}}">
 		<defs>
-			{{#each objects}}
+			{{#each box.objects}}
 				<path d="{{line geometry.coordinates}}" id="primitive-{{@index}}"></path>
 			{{/each}}
 		</defs>
-		<path d="{{line geometry.coordinates}}" class="box"></path>
+		<path d="{{line box.geometry.coordinates}}" class="box"></path>
 		<g class="objects">
-			{{#each objects}}
+			{{#each box.objects}}
 				{{#let objectIndex=@index}}
 					{{#each instances}}
-						{{#with ../../frame @index objectIndex ../../_id}}
+						{{#with ../../frame @index objectIndex ../../box/_id}}
 							<use
 									xlink:href="#primitive-{{objectIndex}}"
 									transform="translate({{position.[0]}} {{position.[1]}}) rotate({{degrees rotation}} {{horizontalCenter (../../geometry)}}  {{verticalCenter (../../geometry)}})"

@@ -1,5 +1,7 @@
 <template name="realTime">
-	{{> boxView box}}
+	{{#if box}}
+		{{> boxView box=box frame=frame}}
+	{{/if}}
 
 	<button>reset</button>
 </template>
