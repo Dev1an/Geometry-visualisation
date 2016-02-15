@@ -4,7 +4,6 @@ Template.realTime.helpers({
 	},
 	frame() {
 		return function(instanceIndex, objectIndex, boxId) {
-			console.log('retreiving frame')
 			return RealTimeObjects.findOne(
 					boxId+objectIndex.toString(16)+instanceIndex.toString(16),
 					{sort: {date: -1}}

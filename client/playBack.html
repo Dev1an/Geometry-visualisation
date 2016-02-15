@@ -1,9 +1,19 @@
 <template name="playBack">
-	{{#if box}}
+	{{#if ready}}
 		{{> boxView box=box frame=frame}}
+
+		{{> timeline class="timeLine" scale=scale query=allEvents}}
+		{{> timeline class="timeLineDetail" scale=detailScale query=selectedEvents}}
+
+		<button>play</button>
+	{{else}}
+		<p>loading data</p>
 	{{/if}}
+</template>
 
-	<svg class="timeLine" viewBox="0 0 {{width}} {{height}}">
-
+<template name="timeline">
+	<svg class="{{class}}" viewBox="0 0 1000 100">
+		<path class="selection"></path>
+		<g></g>
 	</svg>
 </template>

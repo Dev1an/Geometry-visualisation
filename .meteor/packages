@@ -22,3 +22,4 @@ less
 kadira:flow-router
 keypress:keypress
 kadira:blaze-layout
+reactive-var
