@@ -1,10 +1,28 @@
 <head>
-  <title>Package visualisation</title>
+	<title>Package visualisation</title>
 </head>
 
 <body>
-  <svg>
-	  <defs></defs>
-	  <path class="arrow" d="M13.5,0L27,15L17,15L17,36L10,36L10,15L0,15Z" />
-  </svg>
+{{#with box}}
+	<svg viewBox="{{viewBox geometry}}">
+		<defs>
+			{{#each objects}}
+				<path d="{{line geometry.coordinates}}" id="primitive-{{@index}}"></path>
+			{{/each}}
+		</defs>
+		<path d="{{line geometry.coordinates}}" class="box"></path>
+		<g class="objects">
+			{{#each objects}}
+				{{#let objectIndex=@index}}
+					{{#each instances}}
+						{{#with lastFrame @index objectIndex ../../_id}}
+							<use xlink:href="#primitive-{{objectIndex}}" transform="translate({{position.[0]}} {{position.[1]}}) rotate({{rotation}})"></use>
+						{{/with}}
+					{{/each}}
+				{{/let}}
+			{{/each}}
+		</g>
+		<path class="arrow" d="M13.5,0L27,15L17,15L17,36L10,36L10,15L0,15Z"></path>
+	</svg>
+{{/with}}
 </body>
