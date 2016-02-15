@@ -43,8 +43,10 @@
         <item url="file://$USER_HOME$/.meteor/packages/htmljs/1.0.5/web.browser/preamble.js" />
         <item url="file://$USER_HOME$/.meteor/packages/htmljs/1.0.5/web.browser/visitors.js" />
         <item url="file://$USER_HOME$/.meteor/packages/binary-heap/1.0.4/web.browser/min-heap.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/kadira_blaze-layout/2.3.0/web.browser/lib/client/layout.js" />
         <item url="file://$USER_HOME$/.meteor/packages/binary-heap/1.0.4/web.browser/min-max-heap.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.1.1/web.browser/deprecated.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/kadira_blaze-layout/2.3.0/web.browser/lib/client/namespace.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.1.1/web.browser/httpcall_client.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.1.1/web.browser/httpcall_common.js" />
         <item url="file://$USER_HOME$/.meteor/packages/es5-shim/4.1.14/web.browser/export_globals.js" />
@@ -157,8 +159,10 @@
       <root url="file://$USER_HOME$/.meteor/packages/htmljs/1.0.5/web.browser/preamble.js" />
       <root url="file://$USER_HOME$/.meteor/packages/htmljs/1.0.5/web.browser/visitors.js" />
       <root url="file://$USER_HOME$/.meteor/packages/binary-heap/1.0.4/web.browser/min-heap.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/kadira_blaze-layout/2.3.0/web.browser/lib/client/layout.js" />
       <root url="file://$USER_HOME$/.meteor/packages/binary-heap/1.0.4/web.browser/min-max-heap.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.1.1/web.browser/deprecated.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/kadira_blaze-layout/2.3.0/web.browser/lib/client/namespace.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.1.1/web.browser/httpcall_client.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.1.1/web.browser/httpcall_common.js" />
       <root url="file://$USER_HOME$/.meteor/packages/es5-shim/4.1.14/web.browser/export_globals.js" />

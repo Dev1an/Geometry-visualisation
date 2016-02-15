@@ -7,6 +7,9 @@ var previousPalmPosition = [200,0,100]
 FlowRouter.route('/robot', {
 	name: "robot",
 	action(params, queryParams) {
+		Meteor.subscribe('realTimeBox')
+		BlazeLayout.render('layout', { main: "realTime" });
+
 		controller = Leap.loop(function() {})
 
 		Tracker.autorun(function() {
@@ -70,8 +73,6 @@ FlowRouter.route('/robot', {
 		})
 	}
 });
-
-FlowRouter.route('/', {action() {}})
 
 function advance(box) {
 	if (instanceCursor < box.objects[primitiveCursor].instances.length-1) {
@@ -184,6 +185,6 @@ resetBox = function() {
 	].forEach(object => ObjectsHistory.insert(_.extend(object, {date: now, boxId})))
 }
 
-Template.body.events({
+Template.realTime.events({
 	'click button': resetBox
 })

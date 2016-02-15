@@ -1,19 +1,14 @@
+/**
+ * Created by Damiaan on 15/02/16.
+ */
+
 line = d3.svg.line()
 line.interpolate('linear-closed')
 var svgContainer
 
-Template.body.helpers({
+Template.boxView.helpers({
 	line,
 	viewBox: polygon => viewBox(polygon).join(' '),
-
-	box() {return Boxes.findOne()},
-
-	lastFrame(instanceIndex, objectIndex, boxId) {
-		return RealTimeObjects.findOne(
-			boxId+objectIndex.toString(16)+instanceIndex.toString(16),
-			{sort: {date: -1}}
-		)
-	},
 
 	horizontalCenter(polygon) {
 		const xCoordinates = polygon.coordinates.map(coordinates => coordinates[0])
@@ -44,5 +39,3 @@ function viewBox(polygon) {
 
 	return [boxLeft, boxTop, Math.abs(boxRight-boxLeft), Math.abs(boxBottom-boxTop)]
 }
-
-Meteor.subscribe('realTimeBox')

@@ -1,9 +1,4 @@
-<head>
-	<title>Package visualisation</title>
-</head>
-
-<body>
-{{#with box}}
+<template name="boxView">
 	<svg viewBox="{{viewBox geometry}}">
 		<defs>
 			{{#each objects}}
@@ -15,10 +10,10 @@
 			{{#each objects}}
 				{{#let objectIndex=@index}}
 					{{#each instances}}
-						{{#with lastFrame @index objectIndex ../../_id}}
+						{{#with ../../frame @index objectIndex ../../_id}}
 							<use
-								xlink:href="#primitive-{{objectIndex}}"
-								transform="translate({{position.[0]}} {{position.[1]}}) rotate({{degrees rotation}} {{horizontalCenter (../../geometry)}}  {{verticalCenter (../../geometry)}})"
+									xlink:href="#primitive-{{objectIndex}}"
+									transform="translate({{position.[0]}} {{position.[1]}}) rotate({{degrees rotation}} {{horizontalCenter (../../geometry)}}  {{verticalCenter (../../geometry)}})"
 							></use>
 						{{/with}}
 					{{/each}}
@@ -27,6 +22,4 @@
 		</g>
 		<path class="arrow" d="M13.5,0L27,15L17,15L17,36L10,36L10,15L0,15Z"></path>
 	</svg>
-{{/with}}
-	<button>reset</button>
-</body>
+</template>
