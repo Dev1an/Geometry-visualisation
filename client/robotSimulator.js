@@ -20,13 +20,22 @@ FlowRouter.route('/robot', {
 
 					if (hand) {
 						if (!closed) {
-							Boxes.update(box._id, {$set: {
-								[`objects.${primitiveCursor}.instances.${instanceCursor}.position`]: [
-									(hand.palmPosition[0]-previousPalmPosition[0])*5 + box.objects[primitiveCursor].instances[instanceCursor].position[0],
-									(hand.palmPosition[2]-previousPalmPosition[2])*5 + box.objects[primitiveCursor].instances[instanceCursor].position[1]
+							const oldPosition = ObjectsHistory.findOne({
+								boxId: box._id,
+								objectIndex: primitiveCursor,
+								instanceIndex: instanceCursor
+							}, {sort: {date: -1}}).position
+							ObjectsHistory.insert({
+								boxId: box._id,
+								objectIndex: primitiveCursor,
+								instanceIndex: instanceCursor,
+								position: [
+									(hand.palmPosition[0]-previousPalmPosition[0])*5 + oldPosition[0],
+									(hand.palmPosition[2]-previousPalmPosition[2])*5 + oldPosition[1]
 								],
-								[`objects.${primitiveCursor}.instances.${instanceCursor}.rotation`]: [hand.pitch(), hand.roll(), hand.yaw()]
-							}})
+								rotation: hand.yaw(),
+								date: new Date()
+							})
 							previousPalmPosition = hand.palmPosition
 						}
 

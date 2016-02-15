@@ -9,7 +9,7 @@ Template.body.helpers({
 	box() {return Boxes.findOne()},
 
 	lastFrame(instanceIndex, objectIndex, boxId) {
-		return ObjectsHistory.findOne({instanceIndex, boxId, objectIndex}, {sort: {_id: -1}})
+		return ObjectsHistory.findOne({instanceIndex, boxId, objectIndex}, {sort: {date: -1}})
 	}
 })
 
