@@ -9,7 +9,10 @@ Template.body.helpers({
 	box() {return Boxes.findOne()},
 
 	lastFrame(instanceIndex, objectIndex, boxId) {
-		return ObjectsHistory.findOne({instanceIndex, boxId, objectIndex}, {sort: {date: -1}})
+		return RealTimeObjects.findOne(
+			boxId+objectIndex.toString(16)+instanceIndex.toString(16),
+			{sort: {date: -1}}
+		)
 	}
 })
 
@@ -29,3 +32,5 @@ function viewBox(polygon) {
 
 	return [boxLeft, boxTop, Math.abs(boxRight-boxLeft), Math.abs(boxBottom-boxTop)]
 }
+
+Meteor.subscribe('realTimeBox')

@@ -20,12 +20,8 @@ FlowRouter.route('/robot', {
 
 					if (hand) {
 						if (!closed) {
-							const oldPosition = ObjectsHistory.findOne({
-								boxId: box._id,
-								objectIndex: primitiveCursor,
-								instanceIndex: instanceCursor
-							}, {sort: {date: -1}}).position
-							ObjectsHistory.insert({
+							const oldPosition = RealTimeObjects.findOne(box._id + primitiveCursor.toString(16) + instanceCursor.toString(16)).position
+							Meteor.call('updateObject', {
 								boxId: box._id,
 								objectIndex: primitiveCursor,
 								instanceIndex: instanceCursor,
