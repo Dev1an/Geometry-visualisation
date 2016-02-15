@@ -37,41 +37,21 @@ if (Boxes.find().count() == 0) {
 			{
 				"geometryId": rectangleObjectGeometry,
 				"instances": [
-					{
-						handled: false
-					},
-					{
-						handled: false
-					},
-					{
-						handled: false
-					},
-					{
-						handled: false
-					},
-					{
-						handled: false
-					}
+					{handled: false},
+					{handled: false},
+					{handled: false},
+					{handled: false},
+					{handled: false}
 				]
 			},
 			{
 				"geometryId": polygonObjectGeometry,
 				"instances": [
-					{
-						handled: false
-					},
-					{
-						handled: false
-					},
-					{
-						handled: false
-					},
-					{
-						handled: false
-					},
-					{
-						handled: false
-					}
+					{handled: false},
+					{handled: false},
+					{handled: false},
+					{handled: false},
+					{handled: false}
 				]
 			}
 		]

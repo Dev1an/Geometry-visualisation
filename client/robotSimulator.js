@@ -21,7 +21,7 @@ FlowRouter.route('/robot', {
 					if (hand) {
 						if (!closed) {
 							const oldPosition = RealTimeObjects.findOne(box._id + primitiveCursor.toString(16) + instanceCursor.toString(16)).position
-							Meteor.call('updateObject', {
+							ObjectsHistory.insert({
 								boxId: box._id,
 								objectIndex: primitiveCursor,
 								instanceIndex: instanceCursor,
@@ -85,3 +85,105 @@ function advance(box) {
 
 	Jobs.insert({boxId: box._id, object: primitiveCursor, instance: instanceCursor, date: new Date()})
 }
+
+resetBox = function() {
+	const boxId = Boxes.findOne()._id
+	const now = new Date();
+
+	[
+		{
+			"position": [
+				20,
+				20
+			],
+			"rotation": 0,
+			"instanceIndex": 0,
+			"objectIndex": 0
+		},
+		{
+			"position": [
+				180,
+				20
+			],
+			"rotation": 0,
+			"instanceIndex": 1,
+			"objectIndex": 0
+		},
+		{
+			"position": [
+				340,
+				20
+			],
+			"rotation": 0,
+			"instanceIndex": 2,
+			"objectIndex": 0
+		},
+		{
+			"position": [
+				100,
+				120
+			],
+			"rotation": 0,
+			"instanceIndex": 3,
+			"objectIndex": 0
+		},
+		{
+			"position": [
+				260,
+				120
+			],
+			"rotation": 0,
+			"instanceIndex": 4,
+			"objectIndex": 0
+		},
+		{
+			"position": [
+				100,
+				25
+			],
+			"rotation": 0,
+			"instanceIndex": 0,
+			"objectIndex": 1
+		},
+		{
+			"position": [
+				260,
+				25
+			],
+			"rotation": 0,
+			"instanceIndex": 1,
+			"objectIndex": 1
+		},
+		{
+			"position": [
+				20,
+				125
+			],
+			"rotation": 0,
+			"instanceIndex": 2,
+			"objectIndex": 1
+		},
+		{
+			"position": [
+				180,
+				125
+			],
+			"rotation": 0,
+			"instanceIndex": 3,
+			"objectIndex": 1
+		},
+		{
+			"position": [
+				340,
+				125
+			],
+			"rotation": 0,
+			"instanceIndex": 4,
+			"objectIndex": 1
+		}
+	].forEach(object => ObjectsHistory.insert(_.extend(object, {date: now, boxId})))
+}
+
+Template.body.events({
+	'click button': resetBox
+})
