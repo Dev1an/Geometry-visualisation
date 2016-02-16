@@ -15,10 +15,18 @@ Template.playBack.helpers({
 	frame() {
 		var template = Template.instance()
 		return function(instanceIndex, objectIndex, boxId) {
-			return ObjectsHistory.findOne({
-				instanceIndex, objectIndex, boxId,
-				date: {$lte: template.playHead.get()}
-			}, {sort: {date: -1}})
+			const playHead = template.playHead.get()
+			var index = Math.abs(events.binaryIndexOf(playHead, index => events[index].date)) - 1
+			var bundleIndex = Math.abs(bundledEvents.binaryIndexOf(playHead, index => bundledEvents[index].end))
+			while (events[index].instanceIndex != instanceIndex || events[index].objectIndex != objectIndex || events[index].boxId != boxId) {
+				index = bundledEvents[--bundleIndex].end - 1
+			}
+			return events[index]
+
+			//return ObjectsHistory.findOne({
+			//	instanceIndex, objectIndex, boxId,
+			//	date: {$lte: template.playHead.get()}
+			//}, {sort: {date: -1}})
 		}
 	},
 	scale() {
@@ -107,11 +115,32 @@ FlowRouter.route('/playback', {
 	action() {
 		subscription = Meteor.subscribe('boxHistory')
 		BlazeLayout.render('layout', { main: "playBack" });
-		//Tracker.autorun(() => {
-		//	events = ObjectsHistory.find().fetch()
-		//	events.forEach(function(event, index) {
-		//		template.bundledEvents =
-		//	})
-		//})
+		Tracker.autorun(() => {
+			if (subscription.ready()){
+				events = ObjectsHistory.find().fetch()
+				bundledEvents = [{
+					end: 1,
+					boxId: events[0].boxId,
+					object: events[0].objectIndex,
+					instance: events[0].instanceIndex
+				}]
+				var bundleCursor = 0;
+				var lastBundle = bundledEvents[bundleCursor]
+				events.slice(1).forEach(function(event, index) {
+					if (event.instanceIndex == lastBundle.instance && event.objectIndex == lastBundle.object && event.boxId == lastBundle.boxId) {
+						bundledEvents[bundleCursor].end = index + 1
+					} else {
+						bundledEvents.push({
+							end: index+1,
+							boxId: event.boxId,
+							object: event.objectIndex,
+							instance: event.instanceIndex
+						})
+						++bundleCursor
+						lastBundle = bundledEvents[bundleCursor]
+					}
+				})
+			}
+		})
 	}
 })
