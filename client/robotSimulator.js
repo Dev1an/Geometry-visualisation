@@ -74,17 +74,22 @@ FlowRouter.route('/robot', {
 	}
 });
 
-function advance(box) {
-	if (instanceCursor < box.objects[primitiveCursor].instances.length-1) {
-		instanceCursor++
+nextIndexesFor = function(box, primitive, instance) {
+	if (instance < box.objects[primitive].instances.length-1) {
+		instance++
 	} else {
-		instanceCursor = 0
+		instance = 0
 
-		if (primitiveCursor < box.objects.length -1) primitiveCursor++
-		else primitiveCursor = 0
+		if (primitive < box.objects.length -1) primitive++
+		else primitive = 0
 	}
+	return [primitive, instance]
+}
 
-	Jobs.insert({boxId: box._id, object: primitiveCursor, instance: instanceCursor, date: new Date()})
+function advance(box) {
+	[primitiveCursor, instanceCursor] = nextIndexesFor(box, primitiveCursor, instanceCursor)
+	const [nextPrimitive, nextInstance] = nextIndexesFor(box, primitiveCursor, instanceCursor)
+	Jobs.insert({boxId: box._id, object: nextPrimitive, instance: nextInstance, date: new Date()})
 }
 
 resetBox = function() {

@@ -15,5 +15,10 @@
 //})
 
 Meteor.publish('boxHistory', function() {
-	return [Boxes.find(), Geometries.find(), ObjectsHistory.find({}, {sort: {date: 1}})]
+	const today = new Date()
+	today.setHours(0)
+	today.setMinutes(0)
+	today.setSeconds(0)
+	today.setMilliseconds(0)
+	return [Boxes.find(), Geometries.find(), ObjectsHistory.find({date: {$gt: today}}, {sort: {date: 1}})]
 })

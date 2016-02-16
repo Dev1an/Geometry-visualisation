@@ -8,20 +8,21 @@
 		<path d="{{line box.geometry.coordinates}}" class="box"></path>
 		<g class="objects">
 			{{#each box.objects}}
-				{{#let objectIndex=@index}} {{#let x=0}}
+				{{#let objectIndex=@index cX=(horizontalCenter geometry) cY=(verticalCenter geometry)}}
 					<g class="instances">
-						{{#each instances}}
+						{{#each instances}} {{#let instanceIndex=@index}}
 							{{#with ../../frame @index objectIndex ../../box/_id}}
-								<use
-									xlink:href="#primitive-{{objectIndex}}"
-									transform="translate({{position.[0]}} {{position.[1]}}) rotate({{degrees rotation}} {{horizontalCenter (../../geometry)}} {{verticalCenter (../../geometry)}})"
-								></use>
+								<g transform="translate({{position.[0]}} {{position.[1]}}) rotate({{degrees rotation}} {{cX}} {{cY}})">
+									<use xlink:href="#primitive-{{objectIndex}}"></use>
+									{{#if next instanceIndex objectIndex ../../../box._id}}
+										<path class="arrow" d="M0,-18L13.5,-3L3.5,-3L3.5,18L-3.5,18L-3.5,-3L-13.5,-3Z" transform="translate({{cX}} {{cY}})"></path>
+									{{/if}}
+								</g>
 							{{/with}}
-						{{/each}}
+						{{/let}} {{/each}}
 					</g>
-				{{/let}} {{/let}}
+				{{/let}}
 			{{/each}}
 		</g>
-		<path class="arrow" d="M13.5,0L27,15L17,15L17,36L10,36L10,15L0,15Z"></path>
 	</svg>
 </template>

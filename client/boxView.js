@@ -20,7 +20,12 @@ Template.boxView.helpers({
 		return (Math.min(...xCoordinates) + Math.max(...xCoordinates)) / 2
 	},
 
-	degrees: radians => radians/Math.PI*180
+	degrees: radians => radians/Math.PI*180,
+
+	next(instanceIndex, objectIndex, boxId) {
+		const job = Jobs.findOne({}, {sort: {date: -1}})
+		return job && job.boxId == boxId && job.object == objectIndex && job.instance == instanceIndex
+	}
 })
 
 /**

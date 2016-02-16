@@ -72,7 +72,7 @@ Template.playBack.events({
 
 		function updateFrame() {
 			const event = events[cursor++]
-			const svgElement = document.querySelector(`svg .objects .instances:nth-child(${event.objectIndex+1}) use:nth-child(${event.instanceIndex+1})`)
+			const svgElement = document.querySelector(`svg .objects .instances:nth-child(${event.objectIndex+1}) g:nth-child(${event.instanceIndex+1})`)
 			const rotationTail = svgElement.getAttribute('transform').split('rotate(')[1].split(' ').slice(1)
 			svgElement.setAttribute('transform', `translate(${event.position[0]} ${event.position[1]}) rotate(${event.rotation/Math.PI*180} ${rotationTail.join(' ')}`)
 			template.playbackTimer = setTimeout(updateFrame, events[cursor].date - event.date)
@@ -101,11 +101,17 @@ Template.playBack.onRendered(function() {
 	})
 })
 
-var subscription
+var subscription, events, bundledEvents
 
 FlowRouter.route('/playback', {
 	action() {
 		subscription = Meteor.subscribe('boxHistory')
 		BlazeLayout.render('layout', { main: "playBack" });
+		//Tracker.autorun(() => {
+		//	events = ObjectsHistory.find().fetch()
+		//	events.forEach(function(event, index) {
+		//		template.bundledEvents =
+		//	})
+		//})
 	}
 })
